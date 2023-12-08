@@ -1,0 +1,11 @@
+selenium
+openpyxl
+
+time
+
+pandas
+pathlib
+
+flask
+requests
+BeautifulSoup4
