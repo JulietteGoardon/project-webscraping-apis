@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        /* Add your CSS styles here if needed */
+        body {
+            background-image: url('{{ url_for('static', filename='images/fantasy2.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            text-align: center;
+            height: 100vh;
+            margin: 0;
+            background-attachment: fixed;
+            
+        }
+    </style>
+    
+</head>
+<body>
+    <h1>Book Buddy</h1>
+    <form id="recommendationForm" action="/" method="post">
+        <label for="category">Which genre do you like to read?</label>
+        <input type="text" name="category" required>
+        <br>
+        <label for="max_pages">How many pages?</label>
+        <input type="number" name="max_pages" required>
+        <br>
+        <label for="published_year">Published Year</label>
+        <input type="number" name="published_year" required>
+        <br>
+        <button type="submit">Get Recommendations</button>
+        <button type="button" onclick="clearRecommendations()">Clear Recommendations</button>
+    </form>
+
+    {% if recommendations %}
+        <h2>Book Recommendations</h2>
+        <ul>
+            {% for book in recommendations %}
+                <li>
+                    <strong>Title:</strong> {{ book.title }}<br>
+                    <strong>Author:</strong> {{ book.author }}<br>
+                    <strong>Pages:</strong> {{ book.pages }}<br>
+                    <strong>Published Date:</strong> {{ book.published_date }}<br>
+                    {% if book.image_url != 'N/A' %}
+                        <img src="{{ book.image_url }}" alt="Book Cover" style="max-width: 100px; max-height: 150px;">
+                    {% else %}
+                        No image available
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <script>
+        function clearRecommendations() {
+            // Reset the form
+            document.getElementById("recommendationForm").reset();
+
+            // Clear the recommendations display
+            var recommendationsList = document.querySelector("ul");
+            if (recommendationsList) {
+                recommendationsList.innerHTML = "";
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
